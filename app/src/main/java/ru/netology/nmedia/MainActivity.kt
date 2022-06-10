@@ -2,7 +2,6 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import ru.netology.nmedia.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -20,35 +19,21 @@ class MainActivity : AppCompatActivity() {
         )
         with(binding) {
             tvAuthor.text = post.author
-            tvPublished.text = post.published
             tvContent.text = post.content
-            if (post.likedByMe) {
-                ibLike?.setImageResource(R.drawable.ic_baseline_favorited_border_24)
-            }
+            tvPublished.text = post.published
             tvLike?.text = post.likes.toString()
             tvShare?.text = post.shares.toString()
-
-            root.setOnClickListener {
-                Log.d("stuff", "stuff")
-            }
-
-            ivAvatar.setOnClickListener {
-                Log.d("stuff", "avatar")
-            }
-
             ibLike?.setOnClickListener {
-                Log.d("stuff", "like")
                 post.likedByMe = !post.likedByMe
                 ibLike.setImageResource(
                     if (post.likedByMe) R.drawable.ic_baseline_favorited_border_24
                     else R.drawable.ic_baseline_favorite_border_24
                 )
-                if (post.likedByMe) post.likes++ else post.likes--
+                if (post.likedByMe) post.likes++
+                else post.likes--
                 tvLike.text = totalCount(post.likes)
             }
-
             ibShare?.setOnClickListener {
-                Log.d("stuff", "share")
                 post.shares++
                 tvShare.text = totalCount(post.shares)
             }
