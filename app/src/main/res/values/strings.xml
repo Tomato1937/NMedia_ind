@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">NMedia</string>
     <string name="hi">NMedia!</string>
-    <string name="description_post_author_avatar" translatable="false">Post author avatar</string>
-    <string name="description_post_menu" translatable="false">Post menu</string>
+    <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_menu">Post menu</string>
+    <string name="menu_remove">Remove</string>
+    <string name="menu_edit">Edit</string>
+    <string name="post_text">Post Text</string>
+    <string name="description_post_save">Save</string>
+    <string name="description_post_cancel">Cancel</string>
 </resources>
