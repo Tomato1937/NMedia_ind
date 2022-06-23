@@ -1,16 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/card_post"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/barrierBottom"
+        tools:listitem="@layout/card_post" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrierBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="etContent,ibCancel,ibSave"
         />
 
-</FrameLayout>
+<!--    <androidx.constraintlayout.widget.Group-->
+<!--        android:id="@+id/group"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/barrierBottom"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+
+<!--        app:constraint_referenced_ids="etContent,ibCancel" />-->
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/post_text"
+        android:inputType="textMultiLine"
+        android:background="@android:color/transparent"
+        android:padding="@dimen/common_spacing"
+        android:importantForAutofill="no"
+        app:layout_constraintTop_toTopOf="@id/barrierBottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ibSave"
+        app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <ImageButton
+        android:id="@+id/ibCancel"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:padding="@dimen/common_spacing"
+        android:contentDescription="@string/description_post_cancel"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/barrierBottom"
+        app:layout_constraintBottom_toTopOf="@id/ibSave"
+        app:layout_constraintStart_toEndOf="@id/etContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@android:drawable/ic_menu_close_clear_cancel"
+        />
+
+    <ImageButton
+        android:id="@+id/ibSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:contentDescription="@string/description_post_save"
+        app:layout_constraintTop_toBottomOf="@id/ibCancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/etContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_save_48"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
