@@ -48,13 +48,14 @@ class MainActivity : AppCompatActivity() {
             }
             with(binding.etContent) {
                 requestFocus()
-                setText(post.content ?: "")
+                setText(post?.content?: "")
             }
             with(binding.ibCancel){
-                if (binding.etContent.text!=null) {
+                if (binding.etContent.text != null) {
                     visibility = View.VISIBLE
-                } else
-                    visibility = GONE
+                } else {
+                visibility = GONE
+                }
             }
         }
 
@@ -76,6 +77,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.ibCancel.setOnClickListener {
             with(binding.etContent) {
+                viewModel.clear()
                 setText("")
                 clearFocus()
                 hideKeyboard()

@@ -38,11 +38,12 @@ class PostViewModel : ViewModel() {
             return
         } else {
             edited.value = edited.value?.copy(
-                    content = text,
-                    likes = 0,
-                    likedByMe = false,
-                    shares = 0)
-
+                    content = text)
+        }
+    }
+    fun clear() {
+        edited.value?.let{
+            edited.value = emptyPost
         }
     }
 }
