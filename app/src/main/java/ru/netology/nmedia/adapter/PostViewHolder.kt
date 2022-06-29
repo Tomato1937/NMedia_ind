@@ -33,17 +33,15 @@ class PostViewHolder(
                 }
             }.show()
         }
-        ibLike.setImageResource(
-            if (post.likedByMe) R.drawable.ic_baseline_favorited_border_24
-            else R.drawable.ic_baseline_favorite_border_24
-        )
+        ibLike.isChecked = post.likedByMe
         ibLike.setOnClickListener {
             onInteractionListener.onLike(post)
         }
-        tvLike.text = totalCount(post.likes)
+        ibLike.text = totalCount(post.likes)
+        ibShare.isCheckable=false
         ibShare.setOnClickListener {
             onInteractionListener.onShare(post)
         }
-        tvShare.text = totalCount(post.shares)
+        ibShare.text = totalCount(post.shares)
     }
 }

@@ -52,17 +52,17 @@
             app:layout_constraintStart_toEndOf="@id/ivAvatar"
             tools:text="@sample/posts.json/data/published" />
 
-        <ImageButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/ibMenu"
+            style="@style/Widget.AppTheme.IconButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:background="@android:color/transparent"
+            android:checkable="false"
             android:contentDescription="@string/description_post_menu"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tvAuthor"
+            app:icon="@drawable/ic_more_vert_24"
             app:layout_constraintBottom_toBottomOf="@id/tvAuthor"
-            app:srcCompat="@drawable/ic_more_vert_24" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tvAuthor" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/barrierTop"
@@ -91,50 +91,41 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="tvContent" />
 
-        <ImageButton
-            android:id="@+id/ibLike"
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/toggleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/description_post_menu"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrierContent"
-            app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+            app:layout_constraintTop_toBottomOf="@id/barrierContent">
 
-        <TextView
-            android:id="@+id/tvLike"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/ibLike"
-            app:layout_constraintTop_toTopOf="@id/ibLike"
-            app:layout_constraintBottom_toBottomOf="@id/ibLike"
-            tools:text="999"/>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/ibLike"
+                    style="@style/Widget.AppTheme.LikeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checkable="true"
+                    android:contentDescription="@string/description_post_like"
+                    app:icon="@drawable/ic_like_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/barrierContent"
+                    tools:checked="@sample/posts.json/data/likedByMe"
+                    tools:text="@sample/posts.json/data/likes" />
 
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/ibShare"
+                    style="@style/Widget.AppTheme.ShareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="72dp"
+                    android:checkable="false"
+                    android:contentDescription="@string/description_share"
+                    app:icon="@drawable/ic_baseline_share_24"
+                    app:layout_constraintStart_toStartOf="@id/toggleButton"
+                    tools:checked="@sample/posts.json/data/shares"
+                    tools:layout_editor_absoluteY="280dp"
+                    tools:text="@sample/posts.json/data/shares" />
 
-        <ImageButton
-            android:id="@+id/ibShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/posts_avatar_size"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/description_post_menu"
-            app:layout_constraintStart_toEndOf="@id/ibLike"
-            app:layout_constraintTop_toBottomOf="@id/barrierContent"
-            app:srcCompat="@drawable/ic_baseline_share_24" />
-
-        <TextView
-            android:id="@+id/tvShare"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            app:layout_constraintStart_toEndOf="@id/ibShare"
-            app:layout_constraintTop_toTopOf="@id/ibShare"
-            app:layout_constraintBottom_toBottomOf="@id/ibShare"
-            tools:text="999"/>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
         <ImageButton
             android:id="@+id/ibView"
