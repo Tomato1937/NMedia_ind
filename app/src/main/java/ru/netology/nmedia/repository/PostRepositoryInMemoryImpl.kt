@@ -1,7 +1,7 @@
 package ru.netology.nmedia.repository
 
 import androidx.lifecycle.MutableLiveData
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.dto.Post
 
 class PostRepositoryInMemoryImpl : PostRepository {
     private var nextId = 1L
@@ -13,7 +13,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "23 сентября в 10:12",
             likes = 1_299_999,
             likedByMe = false,
-            shares = 9
+            shares = 9,
+            videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             id = 8,
@@ -22,7 +23,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "22 сентября в 10:14",
             likes = 1_299_999,
             likedByMe = false,
-            shares = 99
+            shares = 99,
+            videoUrl = ""
         ),
         Post(
             id = 7,
@@ -31,7 +33,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "22 сентября в 10:12",
             likes = 1_299_999,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             id = 6,
@@ -40,7 +43,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "21 сентября в 10:12",
             likes = 299_999,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = ""
         ),
         Post(
             id = 5,
@@ -49,7 +53,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "20 сентября в 10:14",
             likes = 99_999,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = ""
         ),
         Post(
             id = 4,
@@ -58,7 +63,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "19 сентября в 14:12",
             likes = 9_999,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = ""
         ),
         Post(
             id = 3,
@@ -67,7 +73,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "19 сентября в 10:24",
             likes = 999,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = ""
         ),
         Post(
             id = 2,
@@ -76,7 +83,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "18 сентября в 10:12",
             likes = 99,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = ""
         ),
         Post(
             id = 1,
@@ -85,7 +93,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             published = "21 мая в 18:36",
             likes = 9,
             likedByMe = false,
-            shares = 999
+            shares = 999,
+            videoUrl = ""
         ),
     )
 

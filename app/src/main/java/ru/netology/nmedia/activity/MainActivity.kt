@@ -1,15 +1,16 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activity
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.view.View.GONE
 import androidx.activity.viewModels
+import ru.netology.nmedia.R.*
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.viewmodel.PostViewModel
 import ru.netology.nmedia.adapter.PostsAdapter
-import ru.netology.nmedia.util.hideKeyboard
+import ru.netology.nmedia.dto.Post
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +26,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onShare(post: Post) {
                 viewModel.shareById(post.id)
+                val intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, post.content)
+                    type = "text/plain"
+                }
+
+                val shareIntent =
+                    Intent.createChooser(intent, getString(string.chooser_share_post))
+                startActivity(shareIntent)
             }
 
             override fun onRemove(post: Post) {
@@ -33,9 +43,21 @@ class MainActivity : AppCompatActivity() {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
+            }
 
+            override fun onPlayVideo(post: Post) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
             }
         })
+
+        val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
+            result ?: return@registerForActivityResult
+            viewModel.changeContent(result)
+            viewModel.save()
+        }
 
         binding.list.adapter = adapter
         viewModel.data.observe(this) { posts ->
@@ -45,46 +67,15 @@ class MainActivity : AppCompatActivity() {
         viewModel.edited.observe(this) { post: Post ->
             if (post.id == 0L) {
                 return@observe
-            }
-            with(binding.etContent) {
-                requestFocus()
-                setText(post?.content?: "")
-            }
-            with(binding.ibCancel){
-                if (binding.etContent.text != null) {
-                    visibility = View.VISIBLE
-                } else {
-                visibility = GONE
-                }
+            } else {
+                newPostLauncher.launch(post.content)
             }
         }
 
-        binding.ibSave.setOnClickListener {
-            with(binding.etContent) {
-                if (text.isNullOrBlank()) {
-                    clearFocus()
-                    hideKeyboard()
-                    return@setOnClickListener
-                } else {
-                    viewModel.changeContent(text.toString())
-                    viewModel.save()
-                    setText("")
-                    clearFocus()
-                    hideKeyboard()
-                }
-            }
+        binding.fab.setOnClickListener {
+            newPostLauncher.launch("")
         }
 
-        binding.ibCancel.setOnClickListener {
-            with(binding.etContent) {
-                viewModel.clear()
-                setText("")
-                clearFocus()
-                hideKeyboard()
-            }
-            with(binding.ibCancel) {
-                visibility = GONE
-            }
-        }
+
     }
 }

@@ -2,7 +2,7 @@
     <string name="app_name">NMedia</string>
     <string name="hi">NMedia!</string>
     <string name="description_share">Share</string>
-    <string name="description_post_like" translatable="false">Like</string>
+    <string name="description_post_like">Like</string>
     <string name="description_post_author_avatar">Post author avatar</string>
     <string name="description_post_menu">Post menu</string>
     <string name="menu_remove">Remove</string>
@@ -10,4 +10,7 @@
     <string name="post_text">Post Text</string>
     <string name="description_post_save">Save</string>
     <string name="description_post_cancel">Cancel</string>
+    <string name="chooser_share_post">Share post</string>
+    <string name="error_empty_content">Content can\'t be empty</string>
+    <string name="add_post">Add post</string>
 </resources>

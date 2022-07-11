@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import ru.netology.nmedia.databinding.CardPostBinding
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.dto.Post
 
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener

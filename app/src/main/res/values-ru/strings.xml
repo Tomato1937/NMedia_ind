@@ -10,4 +10,8 @@
     <string name="description_post_save">Сохранить</string>
     <string name="description_post_cancel">Отмена</string>
     <string name="description_share">Поделиться ссылкой</string>
+    <string name="chooser_share_post">Поделиться ссылкой</string>
+    <string name="error_empty_content">Содержимое не может быть пустым</string>
+    <string name="description_post_like">Нравится</string>
+    <string name="add_post">Добавить пост</string>
 </resources>

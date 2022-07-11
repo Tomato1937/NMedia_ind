@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.util
 
 fun totalCount(count: Int): String {
     return when (count) {

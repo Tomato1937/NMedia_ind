@@ -2,7 +2,7 @@ package ru.netology.nmedia.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
 
@@ -13,7 +13,8 @@ private val emptyPost = Post(
     published = "",
     likes = 0,
     likedByMe = false,
-    shares = 0
+    shares = 0,
+    videoUrl = ""
 )
 
 class PostViewModel : ViewModel() {
