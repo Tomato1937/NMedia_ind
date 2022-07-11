@@ -55,8 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         val newPostLauncher = registerForActivityResult(NewPostResultContract()) { result ->
             result ?: return@registerForActivityResult
-            viewModel.changeContent(result)
-            viewModel.save()
+            viewModel.save(result)
         }
 
         binding.list.adapter = adapter
