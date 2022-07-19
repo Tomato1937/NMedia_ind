@@ -50,6 +50,7 @@ class PostViewHolder(
             ivVideoPreview.visibility = GONE
             playButton.visibility = GONE
         } else {
+            ivVideoPreview.visibility = View.VISIBLE
             ivVideoPreview.setImageResource(R.color.purple_500)
             playButton.visibility = View.VISIBLE
         }
@@ -60,6 +61,10 @@ class PostViewHolder(
 
         ivVideoPreview.setOnClickListener {
             onInteractionListener.onPlayVideo(post)
+        }
+
+        tvContent.setOnClickListener {
+            onInteractionListener.onPost(post)
         }
     }
 }
