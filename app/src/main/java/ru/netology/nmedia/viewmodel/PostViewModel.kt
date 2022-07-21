@@ -4,9 +4,9 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.repository.AppDb
+import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositorySQLiteImpl
+import ru.netology.nmedia.repository.PostRepositoryImpl
 
 private val emptyPost = Post(
     id = 0,
@@ -16,12 +16,12 @@ private val emptyPost = Post(
     likes = 0,
     likedByMe = false,
     shares = 0,
-    videoUrl = ""
+    videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
-    private val repository: PostRepository = PostRepositorySQLiteImpl(AppDb.getInstance(
-        application).postDao)
+    private val repository: PostRepository = PostRepositoryImpl(
+        AppDb.getInstance(context = application).postDao())
     val data = repository.getAll()
     val edited = MutableLiveData(emptyPost)
     fun likeById(id: Long) = repository.likeById(id)
@@ -45,12 +45,5 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let{
             edited.value = emptyPost
         }
-    }
-    fun changeContent(content: String) {
-        val text = content.trim()
-        if (edited.value?.content == text) {
-            return
-        }
-        edited.value = edited.value?.copy(content = text)
     }
 }
