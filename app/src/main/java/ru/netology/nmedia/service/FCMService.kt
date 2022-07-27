@@ -53,7 +53,7 @@ class FCMService: FirebaseMessagingService() {
             }
         }
         catch(exception: IllegalArgumentException) {
-            unknownMsg(message.data.toString())
+            unknownMsg()
         }
     }
 
@@ -78,13 +78,13 @@ class FCMService: FirebaseMessagingService() {
             .notify(Random.nextInt(100_000), notification)
     }
 
-    private fun unknownMsg(content: String) {
+    private fun unknownMsg() {
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle(
                 getString(
                     R.string.unknownMsg,
-                    content
+//                    content
                 )
             )
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
