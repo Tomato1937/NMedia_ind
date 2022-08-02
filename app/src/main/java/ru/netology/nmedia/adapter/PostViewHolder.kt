@@ -1,7 +1,5 @@
 package ru.netology.nmedia.adapter
 
-import android.view.View
-import android.view.View.GONE
 import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.dto.Post
@@ -39,32 +37,11 @@ class PostViewHolder(
         ibLike.setOnClickListener {
             onInteractionListener.onLike(post)
         }
-        ibLike.text = totalCount(post.likes)
+        ibLike.text = totalCount(("${post.likes}").toInt())
         ibShare.isCheckable=false
         ibShare.setOnClickListener {
             onInteractionListener.onShare(post)
         }
-        ibShare.text = totalCount(post.shares)
-
-        if (post.videoUrl.isNullOrBlank()) {
-            ivVideoPreview.visibility = GONE
-            playButton.visibility = GONE
-        } else {
-            ivVideoPreview.visibility = View.VISIBLE
-            ivVideoPreview.setImageResource(R.color.purple_500)
-            playButton.visibility = View.VISIBLE
-        }
-
-        playButton.setOnClickListener {
-            onInteractionListener.onPlayVideo(post)
-        }
-
-        ivVideoPreview.setOnClickListener {
-            onInteractionListener.onPlayVideo(post)
-        }
-
-        tvContent.setOnClickListener {
-            onInteractionListener.onPost(post)
-        }
+        ibShare.text = totalCount(("${post.shares}").toInt())
     }
 }

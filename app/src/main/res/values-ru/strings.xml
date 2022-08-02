@@ -19,4 +19,7 @@
     <string name="channel_remote_description">Уведомления с удалённого сервера</string>
     <string name="notification_user_liked">%1$s поставил лайк посту %2$s</string>
     <string name="notification_user_newPost">Пользователь %1$s опубликовал новый пост:\n%2$s</string>
+    <string name="empty">Сообщений нет</string>
+    <string name="retry">Повторить</string>
+    <string name="network_error">Ошибка подключения</string>
 </resources>

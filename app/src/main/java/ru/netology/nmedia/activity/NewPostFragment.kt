@@ -3,7 +3,6 @@ package ru.netology.nmedia.activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.INVISIBLE
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,33 +29,15 @@ class NewPostFragment : Fragment() {
             false
         )
 
-        arguments?.textArg?.let {
-            binding.edit.setText(it)
-        }
-
-        binding.ibCancel.setOnClickListener {
-            with(binding.ibCancel) {
-                if (binding.edit.text.isNullOrBlank()) {
-                    visibility = INVISIBLE
-                } else {
-                    visibility = View.VISIBLE
-                }
-            }
-            with(binding.edit) {
-                viewModel.clear()
-                setText("")
-                clearFocus()
-                hideKeyboard(requireView())
-            }
-        }
-
-        binding.edit.requestFocus()
-
         arguments?.textArg?.let(binding.edit::setText)
 
         binding.ok.setOnClickListener {
-            viewModel.save(binding.edit.text.toString())
+            viewModel.changeContent(binding.edit.text.toString())
+            viewModel.save()
             hideKeyboard(requireView())
+        }
+        viewModel.postCreated.observe(viewLifecycleOwner) {
+            viewModel.loadPosts()
             findNavController().navigateUp()
         }
 

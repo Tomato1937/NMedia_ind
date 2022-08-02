@@ -1,18 +1,16 @@
 package ru.netology.nmedia.activity
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import ru.netology.nmedia.R
 import ru.netology.nmedia.R.*
-import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
-import ru.netology.nmedia.activity.PostFragment.Companion.longArg
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.viewmodel.PostViewModel
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -39,7 +37,6 @@ class FeedFragment : Fragment() {
             }
 
             override fun onShare(post: Post) {
-                viewModel.shareById(post.id)
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, post.content)
@@ -57,34 +54,28 @@ class FeedFragment : Fragment() {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
-                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment,
-                    Bundle().apply {
-                        textArg = post.content
-                    }
-                )
-            }
-
-            override fun onPlayVideo(post: Post) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(post.videoUrl))
-                startActivity(intent)
-            }
-
-            override fun onPost(post: Post) {
-                findNavController().navigate(R.id.action_feedFragment_to_postFragment,
-                    Bundle().apply {
-                        longArg = post.id
-                    }
-                )
             }
         })
 
         binding.list.adapter = adapter
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
+        viewModel.data.observe(viewLifecycleOwner) { state ->
+            adapter.submitList(state.posts)
+            binding.errorGroup.isVisible = state.error
+            binding.pbProgress.isVisible = state.loading
+            binding.tvEmpty.isVisible = state.empty
+        }
+
+        binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
         }
 
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+        }
+
+        binding.swiperefresh.setOnRefreshListener{
+            viewModel.loadPosts()
+            binding.swiperefresh.isRefreshing = false
         }
 
         return binding.root
