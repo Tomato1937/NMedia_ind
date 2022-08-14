@@ -11,7 +11,8 @@ import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.IOException
-import java.lang.Exception
+//import java.lang.Exception
+//import kotlin.Exception
 import kotlin.concurrent.thread
 
 private val emptyPost = Post(
@@ -22,7 +23,7 @@ private val emptyPost = Post(
     likes = 0,
     likedByMe = false,
     shares = 0,
-    videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+//    videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
@@ -39,7 +40,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         loadPosts()
     }
 
-    fun loadPosts() {
+    /*fun loadPosts() {
         thread {
             _data.postValue(FeedModel(loading = true))
             try {
@@ -49,6 +50,18 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 FeedModel(error = true)
             }.also(_data::postValue)
         }
+    }*/
+    fun loadPosts() {
+        _data.value = FeedModel(loading = true)
+        repository.getAllAsync(object : PostRepository.GetAllCallBacker<List<Post>> {
+            override fun onSuccess(posts: List<Post>) {
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
     fun likeById(id: Long) {
         thread {
@@ -61,6 +74,29 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 FeedModel(error = true)
             }.also(_data::postValue)
         }
+    }
+    fun likeByIdAsync(id: Long) {
+        _data.postValue(FeedModel(loading = true))
+        val old = _data.value?.posts.orEmpty()
+        repository.likeByIdAsync(id, object : PostRepository.GetAllCallBacker<Post> {
+            override fun onSuccess(post: Post) {
+                val posts = old.map {
+                    if (it.id == id) {
+                        it.copy(
+                            likedByMe = post.likedByMe,
+                            likes = post.likes
+                        )
+                    } else {
+                        it
+                    }
+                }
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
     }
     fun removeById(id: Long) {
         thread {
@@ -77,6 +113,20 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         }
     }
+    fun removeByIdAsync(id: Long) {
+        _data.postValue(FeedModel(loading = true))
+        val old = _data.value?.posts.orEmpty()
+        _data.postValue(
+            _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                .filter { it.id != id }
+            )
+        )
+        try {
+            repository.removeByIdAsync(id, object: PostRepository.GetAllCallBacker<Unit>{})
+        } catch (e: IOException) {
+            _data.postValue(_data.value?.copy(posts = old))
+        }
+    }
     fun save() {
         thread {
             edited.value?.let {
@@ -85,6 +135,21 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
             edited.postValue(emptyPost)
         }
+    }
+    fun saveAsync() {
+        _data.postValue(FeedModel(loading = true))
+        edited.value?.let {
+            repository.saveAsync(it, object: PostRepository.GetAllCallBacker<Post> {
+                override fun onSuccess(post: Post) {
+                    _postCreated.postValue(Unit)
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
+        }
+        edited.value = emptyPost
     }
     fun edit(post: Post) {
         edited.value = post

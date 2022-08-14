@@ -33,7 +33,7 @@ class NewPostFragment : Fragment() {
 
         binding.ok.setOnClickListener {
             viewModel.changeContent(binding.edit.text.toString())
-            viewModel.save()
+            viewModel.saveAsync()
             hideKeyboard(requireView())
         }
         viewModel.postCreated.observe(viewLifecycleOwner) {

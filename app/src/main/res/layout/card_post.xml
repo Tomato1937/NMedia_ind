@@ -71,33 +71,33 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="ivAvatar,tvPublished,ibMenu" />
 
-        <ImageView
-            android:id="@+id/ivVideoPreview"
-            android:layout_width="320dp"
-            android:layout_height="128dp"
-            android:layout_marginStart="@dimen/common_spacing"
-            android:layout_marginTop="@dimen/common_spacing"
-            android:layout_marginEnd="@dimen/common_spacing"
-            android:autoLink="web"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/tvContent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/barrierTop"
-            tools:text="@sample/posts.json/data/content"
-            android:src="@color/purple_500"/>
+<!--        <ImageView-->
+<!--            android:id="@+id/ivVideoPreview"-->
+<!--            android:layout_width="320dp"-->
+<!--            android:layout_height="128dp"-->
+<!--            android:layout_marginStart="@dimen/common_spacing"-->
+<!--            android:layout_marginTop="@dimen/common_spacing"-->
+<!--            android:layout_marginEnd="@dimen/common_spacing"-->
+<!--            android:autoLink="web"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/tvContent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/barrierTop"-->
+<!--            tools:text="@sample/posts.json/data/content"-->
+<!--            android:src="@color/purple_500"/>-->
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/playButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/ivVideoPreview"
-            app:layout_constraintEnd_toEndOf="@+id/ivVideoPreview"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/ivVideoPreview"
-            app:layout_constraintTop_toTopOf="@+id/ivVideoPreview"
-            app:srcCompat="@drawable/ic_play_button"/>
+<!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--            android:id="@+id/playButton"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:visibility="visible"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/ivVideoPreview"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/ivVideoPreview"-->
+<!--            app:layout_constraintHorizontal_bias="0.5"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/ivVideoPreview"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/ivVideoPreview"-->
+<!--            app:srcCompat="@drawable/ic_play_button"/>-->
 
         <TextView
             android:id="@+id/tvContent"
@@ -109,7 +109,7 @@
             android:autoLink="web"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivVideoPreview"
+            app:layout_constraintTop_toBottomOf="@id/barrierTop"
             tools:text="@sample/posts.json/data/content" />
 
         <androidx.constraintlayout.widget.Barrier

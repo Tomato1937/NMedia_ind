@@ -14,12 +14,12 @@ import ru.netology.nmedia.dto.Post
     var likes: Int = 0,
     val likedByMe: Boolean = false,
     var shares: Int = 0,
-    val videoUrl: String = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+//    val videoUrl: String = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
 ) {
-    fun toDto() = Post(id, author, content, published, likes, likedByMe, shares, videoUrl)
+    fun toDto() = Post(id, author, content, published, likes, likedByMe, shares, /*videoUrl*/)
 
     companion object {
         fun fromDto(dto: Post) = PostEntity(dto.id, dto.author, dto.content, dto.published,
-                    dto.likes, dto.likedByMe, dto.shares, dto.videoUrl)
+                    dto.likes, dto.likedByMe, dto.shares, /*dto.videoUrl*/)
     }
 }
