@@ -5,25 +5,21 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryImpl
 import ru.netology.nmedia.util.SingleLiveEvent
 import java.io.IOException
-//import java.lang.Exception
-//import kotlin.Exception
-import kotlin.concurrent.thread
 
 private val emptyPost = Post(
     id = 0,
     author = "",
+    authorAvatar = "",
     content = "",
     published = "",
     likes = 0,
     likedByMe = false,
-    shares = 0,
-//    videoUrl = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+    shares = 0
 )
 
 class PostViewModel(application: Application) : AndroidViewModel(application) {
@@ -40,17 +36,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         loadPosts()
     }
 
-    /*fun loadPosts() {
-        thread {
-            _data.postValue(FeedModel(loading = true))
-            try {
-                val posts = repository.getAll()
-                FeedModel(posts = posts, empty = posts.isEmpty())
-            } catch (e: Exception) {
-                FeedModel(error = true)
-            }.also(_data::postValue)
-        }
-    }*/
     fun loadPosts() {
         _data.value = FeedModel(loading = true)
         repository.getAllAsync(object : PostRepository.GetAllCallBacker<List<Post>> {
@@ -62,18 +47,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 _data.postValue(FeedModel(error = true))
             }
         })
-    }
-    fun likeById(id: Long) {
-        thread {
-            _data.postValue(FeedModel(loading = true))
-            try {
-                repository.likeById(id)
-                val posts = repository.getAll()
-                FeedModel(posts = posts, empty = posts.isEmpty())
-            } catch (e: IOException) {
-                FeedModel(error = true)
-            }.also(_data::postValue)
-        }
     }
     fun likeByIdAsync(id: Long) {
         _data.postValue(FeedModel(loading = true))
@@ -98,21 +71,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
         })
     }
-    fun removeById(id: Long) {
-        thread {
-            val old = _data.value?.posts.orEmpty()
-            _data.postValue(
-                _data.value?.copy(posts = _data.value?.posts.orEmpty()
-                    .filter { it.id != id }
-                )
-            )
-            try {
-                repository.removeById(id)
-            } catch (e: IOException) {
-                _data.postValue(_data.value?.copy(posts = old))
-            }
-        }
-    }
     fun removeByIdAsync(id: Long) {
         _data.postValue(FeedModel(loading = true))
         val old = _data.value?.posts.orEmpty()
@@ -125,15 +83,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             repository.removeByIdAsync(id, object: PostRepository.GetAllCallBacker<Unit>{})
         } catch (e: IOException) {
             _data.postValue(_data.value?.copy(posts = old))
-        }
-    }
-    fun save() {
-        thread {
-            edited.value?.let {
-                repository.save(it)
-                _postCreated.postValue(Unit)
-            }
-            edited.postValue(emptyPost)
         }
     }
     fun saveAsync() {

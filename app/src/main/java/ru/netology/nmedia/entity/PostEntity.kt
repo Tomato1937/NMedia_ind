@@ -9,17 +9,17 @@ import ru.netology.nmedia.dto.Post
     @PrimaryKey(autoGenerate = true)
     val id: Long,
     val author: String,
+    val authorAvatar: String,
     val content: String,
     val published: String,
     var likes: Int = 0,
     val likedByMe: Boolean = false,
-    var shares: Int = 0,
-//    val videoUrl: String = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
+    var shares: Int = 0
 ) {
-    fun toDto() = Post(id, author, content, published, likes, likedByMe, shares, /*videoUrl*/)
+    fun toDto() = Post(id, author, authorAvatar, content, published, likes, likedByMe, shares)
 
     companion object {
-        fun fromDto(dto: Post) = PostEntity(dto.id, dto.author, dto.content, dto.published,
-                    dto.likes, dto.likedByMe, dto.shares, /*dto.videoUrl*/)
+        fun fromDto(dto: Post) = PostEntity(dto.id, dto.author, dto.authorAvatar, dto.content,
+            dto.published, dto.likes, dto.likedByMe, dto.shares)
     }
 }
