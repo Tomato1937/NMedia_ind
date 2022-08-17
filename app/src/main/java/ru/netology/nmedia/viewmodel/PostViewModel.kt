@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewmodel
 
 import android.app.Application
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -45,6 +46,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
             override fun onError(e: Exception) {
                 _data.postValue(FeedModel(error = true))
+                Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_LONG)
+                    .show()
             }
         })
     }
@@ -67,7 +70,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             }
 
             override fun onError(e: Exception) {
-                _data.postValue(FeedModel(error = true))
+//                _data.postValue(FeedModel(error = true))
+                _data.value = FeedModel(error = true)
+                Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_LONG)
+                    .show()
             }
         })
     }
@@ -83,6 +89,8 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             repository.removeByIdAsync(id, object: PostRepository.GetAllCallBacker<Unit>{})
         } catch (e: IOException) {
             _data.postValue(_data.value?.copy(posts = old))
+            Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_LONG)
+                .show()
         }
     }
     fun saveAsync() {
@@ -90,11 +98,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let {
             repository.saveAsync(it, object: PostRepository.GetAllCallBacker<Post> {
                 override fun onSuccess(post: Post) {
-                    _postCreated.postValue(Unit)
+//                    _postCreated.postValue(Unit)
+                    _postCreated.value = Unit
                 }
 
                 override fun onError(e: Exception) {
-                    _data.postValue(FeedModel(error = true))
+//                    _data.postValue(FeedModel(error = true))
+                    _data.value = FeedModel(error = true)
+                    Toast.makeText(getApplication(), e.toString(), Toast.LENGTH_LONG)
+                        .show()
                 }
             })
         }
